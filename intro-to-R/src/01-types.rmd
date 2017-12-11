@@ -32,8 +32,7 @@ The same happens with comparisons:
 ```
 
 We can assign values to a name using the _assignment operator_ `<-`. R also
-supports `=` for assignment but not everywhere and in any case `<-` is more
-widely used. For instance, we can now assign the value `1` to the variable `a`,
+supports `=` for assignment, but it is not recommended. For instance, we can now assign the value `1` to the variable `a`,
 and every time we call `a` we will get the value it is referred to:
 
 ```{r eval=FALSE}
@@ -128,12 +127,12 @@ A * B
 A %*% B
 ```
 
-See how the first operation is element-wise, while the second is the standard matrix multiplication. We also have common operations like extracting the diagonar (which is a `vector`) or calculating the transpose or the inverse:
+See how the first operation is element-wise, while the second is the standard matrix multiplication. We also have common operations like extracting the diagonal (which is a `vector`) or calculating the transpose or the inverse:
 	
 ```{r eval=FALSE}
 t(A)
 diag(A)
-solve(A) # but A^-1
+solve(A) # A^-1
 ```
 
 A `list` is an ordered collection of objects, possibly of different types. 

@@ -166,7 +166,7 @@ read_stata(path)
 
 As a matter of fact, one of the good things about `R` is that it interacts
 nicely with many other programs. For instance, it can read Excel spreadsheets in
-several different ways. The one I use is through the `readxl` library, which
+several different ways. One option is `readxl` library, which
 does not require Java. So first, like before, we need to install the package and
 load it:
 
