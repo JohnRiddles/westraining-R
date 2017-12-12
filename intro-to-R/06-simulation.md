@@ -38,7 +38,7 @@ We could of course use many other different distributions:
 rbeta(1, 2, 1)
 ```
 
-    ## [1] 0.4988107
+    ## [1] 0.6919267
 
 ``` r
 pgamma(.3, 2, 2)
@@ -72,7 +72,7 @@ n <- 10
 sd(replicate(999, mean(rnorm(n, 3, 2))))
 ```
 
-    ## [1] 0.6469804
+    ## [1] 0.6389263
 
 which is approximately $\\sigma/\\sqrt{n}$, as expected.
 
@@ -91,7 +91,7 @@ x <- rnorm(25, 3.2, 1.7)
 sd(replicate(999, mean(sample(x, length(x), replace=TRUE))))
 ```
 
-    ## [1] 0.364743
+    ## [1] 0.2794155
 
 and that matches:
 
@@ -100,7 +100,7 @@ sqrt(vcov(lm(x ~ 1)))
 ```
 
     ##             (Intercept)
-    ## (Intercept)   0.3669093
+    ## (Intercept)   0.2840395
 
 With these elements we can now think about, for instance, making
 extractions of the posterior distribution of the estimated coefficients

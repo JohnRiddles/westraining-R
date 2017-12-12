@@ -7,8 +7,8 @@
     experimentation and exploration, which improves data analysis.”
 -   Great for visualization. Excellent packages for graphics.
 -   A very active and helpful community.
--   Very flexible: Good support for metaprogramming, first class
-    functions, first-class environments.
+-   Very flexible & extensible: Good support for metaprogramming, first
+    class functions, first-class environments.
 -   Supports array-based programming.
 
 **What is R anyway?**
@@ -35,46 +35,21 @@ convention (R doesn’t care what extension is used).
 
 **SAS vs. R**
 
-Some advantages of SAS:
-
--   Centralized support.
--   Easier to work with data sets that do not fit in main memory. R
-    requires special packages for this; these packages are not
-    well-integrated with the rest of R.
--   Quality of documentation is more consistent.
--   More consistent naming conventions.
--   Better integration with SQL.
--   Better default logging behavior.
-
-Some advantages of R:
-
--   Free.
--   Open source. You may inspect and modify anything you wish.
--   More available methods (10,000+ packages).
--   New methods are almost always released in R first. If you want the
-    cutting edge, use R.
--   Superior graphing libraries.
--   Matrix operations supported by both languages but better integrated
-    in R.
--   Resembles other languages (e.g., Python, Matlab)…easier to transfer
-    skills.
--   More flexible/extensible. Writing highly customized code is easy &
-    intuitive.
--   Faster market growth. Academia shifting to R.
--   The only common tongue between statisticians & data scientists.
-
-Other differences:
-
+-   SAS: Licensed, closed source. R: Free, open source. New methods are
+    almost always released in R first.
+-   SAS has centralized support; R does not.
 -   SAS is split into many sub-languages: DATA step, PROCs, macros, IML,
     SCL, etc. R is more uniform: processing of all kinds is handled by
     function (procedure) application.
--   SAS: Individual procedures often heavyweight, covering many uses. R:
-    Procedures (called “functions” in R lingo) are often more
-    specialized.
--   SAS: Generally verbose output. R: Generally terse output. If you
-    want something, you have to ask for it.
--   R is more free-form, resembling more traditional programming
-    languages.
+-   R is more free form. More closely resembles other languages (e.g.,
+    Python, Matlab).
+-   Unlike SAS, R assumes data fit into main memory. Special packages
+    required for larger data sets.
+-   SAS has better integration with SQL
+-   Most data scientists don’t use SAS. Most statisticians don’t use
+    Python. R is a common tongue.
+-   Output in R is usually more terse. If you want something, you have
+    to ask for it.
 
 **RStudio**
 
@@ -171,6 +146,3 @@ is rendered as:
     plot(a, b); title("An ugly plot")
 
 ![](./assets/unnamed-chunk-3-1.png)
-
-These course notes are a slightly modified version of notes created by
-Westat data scientist, Gonzalo Rivero.
