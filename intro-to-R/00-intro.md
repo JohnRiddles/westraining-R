@@ -7,8 +7,8 @@
     experimentation and exploration, which improves data analysis.”
 -   Great for visualization. Excellent packages for graphics.
 -   A very active and helpful community.
--   Very flexible & extensible: Good support for metaprogramming, first
-    class functions, first-class environments.
+-   Very flexible: Good support for metaprogramming, first class
+    functions, first-class environments.
 -   Supports array-based programming.
 
 **What is R anyway?**
