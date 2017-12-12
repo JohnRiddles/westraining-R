@@ -125,12 +125,13 @@ To search for a topic, one can type:
 help.search("nonlinear regression") # alternative syntax
 ```
 
+Note that the above only searches through installed packages. Better search method: Google. ;)
 
 The R community is very helpful and active. If you ever get stuck in a problem, the best solution is to ask in 
 [StackOverflow](http://stackoverflow.com/), a very large community of
 programmers using the `#r` tag. 
 
-Like other single-letter languages, R can be tricky to Google. Try: "Rstats," "R programming," "R statistics."
+Like other single-letter languages, R can be tricky to Google. Try: "R programming," "R statistics."
 
 Within Westat, there is a growing community of users and we have a number of
 resources for Q&A and sharing information or announcements.
