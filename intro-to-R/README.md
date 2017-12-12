@@ -18,36 +18,6 @@ sense when you think about it as a programming language. Because of that, I have
 included some topics that are usually left out in some other introductions. This
 should provide you the tools to further explore R on your own.
 
-### Challenges
-
-I encourage you to work on the problem sets between sessions. They are fairly
-easy but they will help you consolidate what you have learned, especially
-considering that we will go very quickly over a lot of material. It is probably
-useful to remember that learning a new language is essentially a matter of
-practice. The challenges also cover a few things that I will not go over during
-the sessions, mostly to push you to use the numerous resources that are
-available about R.
-
-### Structure
-
-_Day 1:_
-
-- Overview of the language and resources
-- Data types and data structures
-- I/O and data manipulation
-
-_Day 2:_
-
-- Basic statistics and modeling
-- Probability
-- Figures
-
-_Day 3:_
-
-- Control flow statements
-- Writing your own functions
-- More data manipulation: split-apply-combine, merge and reshape.
-
 ### Materials
 | Section| Materials |
 |---|---|
