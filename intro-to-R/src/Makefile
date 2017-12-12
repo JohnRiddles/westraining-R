@@ -4,4 +4,3 @@ build:
 	cp ./assets/* ../assets/
 	rm -r ./assets
 	git add ../*.md ../assets/. ../pdfs/.
-	git commit -m "Update md and pdf files"

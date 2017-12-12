@@ -42,17 +42,17 @@ Some advantages of SAS:
 - Centralized support.
 - Easier to work with data sets that do not fit in main memory. R requires special packages for this; these packages are not well-integrated with the rest of R.
 - Quality of documentation is more consistent.
+- More consistent naming conventions.
 - Better integration with SQL.
 - Better default logging behavior.
-- More consistent naming conventions.
 
 Some advantages of R:
 
 - Free.
 - Open source. You may inspect and modify anything you wish.
-- More available methods (10,000+ packages). If you want the cutting edge, use R.
-- New methods are almost always released in R first.
-- Superior graphical capabilities.
+- More available methods (10,000+ packages).
+- New methods are almost always released in R first. If you want the cutting edge, use R.
+- Superior graphing libraries.
 - Matrix operations supported by both languages but better integrated in R.
 - Resembles other languages (e.g., Python, Matlab)...easier to transfer skills.
 - More flexible/extensible. Writing highly customized code is easy & intuitive.
@@ -64,7 +64,7 @@ Other differences:
 - SAS is split into many sub-languages: DATA step, PROCs, macros, IML, SCL, etc. R is more uniform: processing of all kinds is handled by function (procedure) application.
 - SAS: Individual procedures often heavyweight, covering many uses. R: Procedures (called "functions" in R lingo) are often more specialized.
 - SAS: Generally verbose output. R: Generally terse output. If you want something, you have to ask for it.
-- R is more free-form, resembling more traditional programming languages. This is both an advantage (more flexible) and a disadvantage (less built-in structure).
+- R is more free-form, resembling more traditional programming languages.
 
 **RStudio**
 
@@ -74,9 +74,11 @@ is important to keep in mind that R (the language) and RStudio (the GUI) are
 separate things, and it is entirely possible to use different workflows with
 other tools or text editors:
 
-- `emacs` through [ESS](http://ess.r-project.org/) (what I use).
+- `emacs` through [ESS](http://ess.r-project.org/).
 - `vim` with the [Vim-R-Plugin](http://www.vim.org/scripts/script.php?script_id=2628).
 - Sublime Text.
+- Scite.
+- Notepad++.
 
 **A few useful resources**
 
@@ -157,5 +159,4 @@ b <- a + rnorm(N)
 plot(a, b); title("An ugly plot")
 ```
 
-These course notes are a modified version of notes created by Westat data scientist, Gonzalo Rivero. Visit Gonzalo Rivero's github account to see his version,
-which was used the last time this course was taught.
+These course notes are a slightly modified version of notes created by Westat data scientist, Gonzalo Rivero.
