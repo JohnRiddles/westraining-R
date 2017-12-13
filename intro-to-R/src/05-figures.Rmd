@@ -37,7 +37,7 @@ plot(affairs$ym, affairs$yhat)
 
 and with some effort we could customize the picture a bit:
 
-```{r}
+```{r betterpic}
 plot(affairs$ym, affairs$yhat, 
      col="red", 
      pch=19, 
