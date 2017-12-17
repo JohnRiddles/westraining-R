@@ -232,6 +232,22 @@ read_excel(path)
     ## 2    B5    C5    D5
     ## 3    B6    C6    D6
 
+We can also query data from databases. There are a number of packages
+for this, but the one I prefer is `RODBC` (some database systems may be
+incompatible and require a different package).
+
+``` r
+library(RODBC)
+
+db_str <- sprintf("driver={SQL Server};server=%s;database=%s;uid=%s;pwd=%s",
+                   server, database, username, password)                   
+db_handle <- odbcDriverConnect(db_str)
+
+data <- sqlQuery(dbhandle, query_str)
+
+odbcClose(db_handle)
+```
+
 Each of these function has a number of options (Do we want to use a
 catalog file for SAS? In which sheet is the data in our Excel file? How
 to deal with user generated missing values in SPSS?) and of course we
