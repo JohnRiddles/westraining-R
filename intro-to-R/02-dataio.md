@@ -252,7 +252,6 @@ Each of these function has a number of options (Do we want to use a
 catalog file for SAS? In which sheet is the data in our Excel file? How
 to deal with user generated missing values in SPSS?) and of course we
 can interact with many other formats (`feather` for data exchange with
-Python, fixed width files, hd5, …), connections (PostgreSQL, MongoDB,
-Microsoft Access, SQL Server, …), streams (for real-time analysis), …
+Python, fixed width files, hd5, …), streams (for real-time analysis), …
 but this is sufficient for now. Let’s move on to doing something with
 the data.
