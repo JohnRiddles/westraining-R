@@ -1,10 +1,11 @@
 One of the very nice features of R when one comes from other statistical
-software like SAS or Stata is that it is very easy to program. And that
-is a really good thing, because the manipulation, analysis, and
-visualization of data is considerably easier when one can write small
-functions. In addition, because R is open-source, you can inspect what
-every function does, so it is useful to get a sense of the most basic
-elements of programming to be able to take advantage of that feature.
+software like SAS or Stata is that it is very easy to write customized
+code and develop your own functions. That is a very good thing because
+the manipulation, analysis, and visualization of data is considerably
+easier when one can write small functions. In addition, because R is
+open-source, you can inspect what every function does, so it is useful
+to get a sense of the most basic elements of programming to be able to
+take advantage of that feature.
 
 ### Defining functions
 
@@ -22,8 +23,8 @@ my_mean(c(0, 1))
     ## [1] 0.5
 
 To define a function, we use the keyword `function` followed by
-parenthesis and (optionally) the arguments that the function takes, and
-the expression that the function runs. We then assign this function to a
+parentheses, (optionally) the arguments that the function takes, and the
+expression that the function runs. We then assign this function to a
 name, in this case, `my_mean`.
 
 See how typing `my_mean` allows you to see what you have just defined.
@@ -33,7 +34,6 @@ my_mean
 ```
 
     ## function(x) sum(x)/length(x)
-    ## <environment: 0x000000001f42f4a8>
 
 The way we defined the function is perfectly valid but we could also be
 a bit more explicit by enclosing the statement in parenthesis and
@@ -45,108 +45,9 @@ my_mean <- function(x) {
 }
 ```
 
-Now that we have the fundamentals of how to define a function, let’s
-take a look at control flow operations.
-
-### Loops
-
-`for` allows us to iterate and repeat an operation over a sequence. As
-you can imagine, we need to be explicit about two things: the sequence
-and the variable that will be taking values over that sequence.
-
-``` r
-for (i in 1:3) print(i)
-```
-
-    ## [1] 1
-    ## [1] 2
-    ## [1] 3
-
-Let’s see a less trivial example in which we want to calculate the sum
-of a vector:
-
-``` r
-myvector <- c(1, 2, 3, 4)
-out <- 0
-for (i in 1:length(myvector)) {
-  out <- myvector[i] + out
-}
-out
-```
-
-    ## [1] 10
-
-Here `out` will hold the result of progressively adding the values of
-`myvector`. Notice how `i` takes, in each iteration, a different value
-in the sequence between 1 and the length of `myvector` that we then use
-to retrieve the value in each position.
-
-Depending on the context, it will probably make sense to wrap this
-operations in a function. At the end of the day, the only thing that
-will change in different calculations of a sum is the vector it operates
-over, so we can *parametrize* over that vector:
-
-``` r
-my_sum <- function(x) {
-  out <- 0
-  for (i in 1:length(x)) {
-    out <- x[i] + out
-  }
-  return(out)
-}
-my_sum(c(1, 2, 3, 4))
-```
-
-    ## [1] 10
-
-Another way to build loops is with the statement `while`. It will
-evaluate an expression until a condition is not met:
-
-``` r
-i <- 0
-while (i < 3) {
-  print(i)
-  i <- i + 1
-}
-```
-
-    ## [1] 0
-    ## [1] 1
-    ## [1] 2
-
-The thing to notice is that how in each iteration of the loop, the value
-of `i` changes: when it takes the value 3, the condition `i < 3`
-evaluates to FALSE, and the loop stops –and therefore, 3 is not printed
-to the screen.
-
-There are some cases in which the use of `which` is natural, like when
-we want to run algorithms until something converges. Take for instance
-the calculation of Newton-Raphson:
-
-``` r
-tol <- 0.01
-x_last <- 10; diff <- 1
-while (abs(diff) > tol) {
-    x <- x_last - (x_last^2)/(2*x_last)
-    diff <- (x - x_last)
-    x_last <- x
-    print(x)
-}
-```
-
-    ## [1] 5
-    ## [1] 2.5
-    ## [1] 1.25
-    ## [1] 0.625
-    ## [1] 0.3125
-    ## [1] 0.15625
-    ## [1] 0.078125
-    ## [1] 0.0390625
-    ## [1] 0.01953125
-    ## [1] 0.009765625
-
-However, `while` may end up producing infinite loops if one is not
-careful.
+Note the use of braces to enclose the contents of the function. Braces
+are optional when the function body consists of a single line but are
+necessary when the functional body contains multiple lines.
 
 ### Conditionals
 
@@ -191,6 +92,7 @@ How to deal with the previous issue? By issuing an error:
 
 ``` r
 my_sign <- function(x) {
+
   if (!is.numeric(x)) {
     stop("Input is not a number")
   }
@@ -210,32 +112,135 @@ Two things two notice here. First, that `!` is the negation operator
 (`TRUE == !FALSE`). Second, that `stop` interrupts the evaluation and
 produces an error, so the function never reaches the next conditional.
 
-The if-else structure is the building block of a rejection sampling
-algorithm, so let’s use to makes samples out of a *B**e**t**a*(3, 6).
+### Vectorized operations
+
+One common need is to apply an operation to each individual element of a
+vector or list. As in most programming languages, this can be done in R
+through looping constructs. However, the use of loops in R is considered
+by some to be bad practice, and loopos can significantly slow down the
+execution of one’s code in some cases, particularly when updated a data
+frame within a loop. This is not always true, such as when adding
+elements to a allocated list, but even in cases where loops do not
+increase run time, one should be hesitant to use loops since they are
+not consistent with R’s status as a (somewhat) functional vector-based
+language. Another reason to avoid loops is that they can be difficult to
+translate into a parallelized version.
+
+What do we do then? The alternative in R is vectorized operations. There
+are a number of ways to do this. First, let’s define a function that
+calculates a factorial of a number.
 
 ``` r
-R <- 10000
-samples <- matrix(NA, nrow=R, ncol=2)
+myfactorial <- function(x) {
 
-for(i in 1:R) {
-  samples[i, 1] <- runif(1, 0, 1)
-  U <- runif(1, 0, 1)
-  if(dunif(samples[i, 1], 0, 1)*3*U <= dbeta(samples[i, 1], 3, 6)) {
-    samples[i, 2] <- 1
+  if(x == 0) {
+    return(1)
+  } else {
+    return(x*myfactorial(x-1))
   }
-  else if(dunif(samples[i, 1],0, 1)*3*U > dbeta(samples[i, 1], 3, 6)) {
-  samples[i, 2] <- 0
-  }
+  
 }
-
-samples <- data.frame(samples)
-names(samples) <- c("candidate", "accept")
-samples <- samples[samples$accept == 1,]
-
-library(ggplot2)
-p <- ggplot(samples, aes(x=candidate))
-p + geom_density() + 
-    stat_function(fun=dbeta, args=list(3, 6), colour="red", linetype=2)
 ```
 
-![](./assets/unnamed-chunk-13-1.png)
+Note that this function calls itself. This is known as recursion. In
+practice, some checks on the parameter should probably be added to
+assure that it’s a nonnegative integer, and there are surely faster,
+safer implementations, but let’s not worry about that for now. Let’s
+instead consider what we would need to do to apply the function to each
+element of a vector. We cannot simply pass in the vector because the
+function expects a scalar, i.e., a vector of length 1. There are a few
+ways around this.
+
+One option is to use the `apply` family of functions. These are
+functions that can apply a function to individual elements of a vector
+or list, or apply a function to each row or column of a matrix. In this
+case, we would use `sapply`.
+
+``` r
+results <- sapply(1:5, myfactorial)
+```
+
+The first parameter to `sapply` is the vector, and second parameter is
+the function which we want to apply the vectors elements. `sapply` will
+return a vector containing the resulting factorials. Note that if the
+return values are not all of the same type, then `sapply` will instead
+return a list. If you want a predictable return type, one can use
+`lapply` instead, which works the same way but always returns a list.
+
+There are other functions in the apply family, such as `apply`, which
+applies a function to every row or column of a matrix, but they are used
+in a similar manner. Further, some R users prefer a group of functions
+defined in the `plyr` and `dplyr` packages which perform apply-like
+operations. These packages are briefly discussed in the next section.
+
+A second option is to create a new function which handles all of these
+`apply` operations automatically. This can be done through the
+`Vectorize` function. We would define a new vectorized version like
+this:
+
+``` r
+myfactorial_vectorized <- Vectorize(myfactorial)
+```
+
+Alternatively, we could have done this in our original function
+definition.
+
+``` r
+myfactorial <- Vectorize(function(x) {
+
+  if(x == 0) {
+    return(1)
+  } else {
+    return(x*myfactorial(x-1))
+  }
+  
+})
+```
+
+Using our new “vectorized” function is simple:
+
+``` r
+results <- myfactorial_vectorized(1:5)
+```
+
+Please note that `Vectorize` has one important parameter that we did not
+mention: `vectorize.args`. This should be set to a vector of strings
+which contain the variable names we wish to “vectorize” over. For
+example, suppose we have the following function:
+
+``` r
+weird_sum <- function(x, y, z) {
+
+  x + y + sum(z)
+  
+}
+```
+
+Now assume we want to vectorize the function over `x` and `y` but not
+`z`, i.e., we want to add the first element of `x`, the first element of
+`y`, and the sum of `z`, and then the second element of `x`, the second
+element of `y`, and the sum of `z`, and so on. We would do it like this:
+
+``` r
+weird_sum <- Vectorize(function(x, y, z) {
+
+  x + y + sum(z)
+  
+}, vectorize.args = c("x", "y"))
+```
+
+*Actually, `weird_sum` will work as intended without the use of
+`Vectorize` but only because the `+` operator is vectorized. For the
+sake of illustration, let’s ignore this pesky detail.*
+
+We did not need to specify `vectorize.args` in our `myfactorial` example
+because the default value is to vectorize over all arguments, which is
+what we wanted in that case.
+
+In some cases, both options are unnecessary because there are already
+functions to accomplish our task. For example, the built-in `factorial`
+function in R is already vectorized. Similarly, there are a number of
+built-in functions for calculating sums and means over rows or columns
+of a matrix, e.g., `rowSums`, `colMeans`. The use of these kind of
+functions is simpler and often results in faster programs than the
+above, so one should use explicit vectorization only as needed.
