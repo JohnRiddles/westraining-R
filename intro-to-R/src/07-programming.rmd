@@ -55,6 +55,65 @@ Note the use of braces to enclose the contents of the function. Braces are
 optional when the function body consists of a single line but are necessary when
 the functional body contains multiple lines.
 
+### Closures
+
+A closure can be thought of as a function with data attached. They can reduce
+bookkeeping and improve readability by keeping copies of data instead of passing
+them as parameters to the function each time. They are normally used when a 
+function is called multiple 
+times but one or more parameters to the function does not change between calls.
+Closures are normally created by other functions. Here as an example.
+
+```{r eval=FALSE}
+setup_bootstrap <- function(dat) {
+
+  n <- nrow(dat)
+  
+  function() {
+  
+    dat[sample.int(n = n, size = n, replace = TRUE),]
+    
+  }
+  
+}
+
+fake_data <- data.frame(x = 1:5, y = 2:6)
+
+bootstrap <- setup_bootstrap(fake_data)
+
+mysample <- bootstrap()
+
+# Get 30 bootstrap samples
+more_samples <- lapply(1:30, function(unused) bootstrap())
+
+```
+
+`bootstrap` is a closure that is returned by `setup_bootstrap` (recall that 
+functions in R are first-class, so we can return them like any other variable).
+Notice that we
+don't need to pass a copy of `fake_data` to `bootstrap` when we call it. It has
+an internal copy of the data set.
+
+R uses something called lexical scoping. This means that if a function refers to
+a variable that is not defined within the function and is not passed as a 
+parameter to the function, the next place R looks for the variables is where the
+function is defined (this is in contrast to dynamic scoping, which R's ancestor
+S uses, which instead looks where the funciton is called, not defined). `dat` 
+and `n` are
+not passed to the anonymous (unnamed) function within `setup_bootstrap`, but 
+that anonymous function can still see them. When `setup_boostrap` returns, `dat`
+and `n` 
+would normally go out of scope and disappear, but the newly created function, 
+`bootstrap` keeps a copy because of lexical scoping. Note that changing 
+`fake_data` will not update the copy within `bootstrap`, since the version 
+within `bootstrap` is from the `dat` parameter of `setup_bootstrap`, not the
+global variable `fake_data`.
+
+Technically, all user-defined funtions in R are closures. Keep this in mind when
+defining functions that return other functions. The resulting closure will keep
+the data defined within its lexical scope around "just in case," increasing the
+memory use of your program.
+
 ### Conditionals
 
 As you can imagine, conditionals execute an action depending on the value 
