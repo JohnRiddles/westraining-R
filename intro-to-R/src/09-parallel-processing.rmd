@@ -10,9 +10,11 @@ output:
 ```{r setup, include=FALSE, cache=FALSE}
 knitr::opts_chunk$set(fig.path = './assets/')
 ```
-Parallel processing is a technique that can be used to make programs run faster.
-It typically involves splitting up a data set into smaller pieces, simultaneously
-process each piece on a separate core, and then put the results back together.
+Parallel processing is a technique that can be used to make programs run faster
+by running multiple calculations simultaneously on multiple cores.
+It typically involves splitting up a data set into smaller pieces, 
+concurrently processing each piece on a separate core, and then putting the results back
+together.
 The original process is known as the master node, and the others are known as
 slave nodes.
 Not every problem is easily parallelized, but for those that can be

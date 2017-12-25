@@ -1,7 +1,8 @@
 Parallel processing is a technique that can be used to make programs run
-faster. It typically involves splitting up a data set into smaller
-pieces, simultaneously process each piece on a separate core, and then
-put the results back together. The original process is known as the
+faster by running multiple calculations simultaneously on multiple
+cores. It typically involves splitting up a data set into smaller
+pieces, concurrently processing each piece on a separate core, and then
+putting the results back together. The original process is known as the
 master node, and the others are known as slave nodes. Not every problem
 is easily parallelized, but for those that can be parallelized, this
 technique can significantly speed up the execution of one’s program.
@@ -90,7 +91,7 @@ So, did we actually make things faster? Let’s see.
 ```
 
     ##    user  system elapsed 
-    ##    0.16    0.04    6.65
+    ##    0.17    0.12    6.27
 
 ``` r
 {
