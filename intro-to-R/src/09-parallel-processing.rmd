@@ -26,7 +26,7 @@ the most popular is the `parallel` package, which we will illustrate here. For
 our example, we will consider calculating the mean of a large vector of numbers.
 This is the kind of problem that can be easily parallelized. We simply chop up
 our vector into smaller vectors, calculate the sum of each vector, and then 
-sum the results and divide the by length of the original vector. In R, this can
+sum the results and divide by length of the original vector. In R, this can
 be done as follows:
 
 ```{r}
@@ -52,12 +52,12 @@ print(parallel_mean(x))
 Let's now explain what this does.
 `makeCluster` creates the nodes which are used to execute each sub-problem. 
 This function supports two methods of clustering: sockets and forks. The socket
-method spawns a new, fresh instance of R on each node, and slave nodes communicate with
+method spawns a new instance of R on each node, and slave nodes communicate with
 the master node via network sockets. Under the fork method, the current R instance
 is copied to each node. The default
-is the socket method. Forks are usually faster and are easier from a programming perspective,
+is the socket method. Forks are usually faster and are often easier from a programming perspective,
 but unfortunately they are not supported on 
-Windows, so we use sockets here, and we will not be covering the forking method.
+Windows, so we use sockets here.
 The first argument to `makeCluster` is the number of nodes,
 which we set to `detectCores() - 1`. `detectCores` 
 returns the number of available nodes. Personally, I usually use all but one 
@@ -136,3 +136,5 @@ clusterEvalQ(cluster, {
 })
 
 ```
+
+###

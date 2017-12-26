@@ -172,6 +172,8 @@ diag(A)
 solve(A) # A^-1
 ```
 
+An `array` is a generalization of matrices to any number of dimensions.
+
 A `list` is an ordered collection of objects, possibly of different
 types.
 

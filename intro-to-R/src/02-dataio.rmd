@@ -199,8 +199,6 @@ db_handle <- odbcDriverConnect(db_str)
 data <- sqlQuery(dbhandle, query_str)
 
 odbcClose(db_handle)
-
-  
 ```
 
 Each of these function has a number of options (Do we want to use a catalog file

@@ -12,8 +12,8 @@ Currently, the most popular is the `parallel` package, which we will
 illustrate here. For our example, we will consider calculating the mean
 of a large vector of numbers. This is the kind of problem that can be
 easily parallelized. We simply chop up our vector into smaller vectors,
-calculate the sum of each vector, and then sum the results and divide
-the by length of the original vector. In R, this can be done as follows:
+calculate the sum of each vector, and then sum the results and divide by
+length of the original vector. In R, this can be done as follows:
 
 ``` r
 library(parallel)
@@ -39,15 +39,14 @@ print(parallel_mean(x))
 
 Let’s now explain what this does. `makeCluster` creates the nodes which
 are used to execute each sub-problem. This function supports two methods
-of clustering: sockets and forks. The socket method spawns a new, fresh
+of clustering: sockets and forks. The socket method spawns a new
 instance of R on each node, and slave nodes communicate with the master
 node via network sockets. Under the fork method, the current R instance
 is copied to each node. The default is the socket method. Forks are
-usually faster and are easier from a programming perspective, but
-unfortunately they are not supported on Windows, so we use sockets here,
-and we will not be covering the forking method. The first argument to
-`makeCluster` is the number of nodes, which we set to
-`detectCores() - 1`. `detectCores` returns the number of available
+usually faster and are often easier from a programming perspective, but
+unfortunately they are not supported on Windows, so we use sockets here.
+The first argument to `makeCluster` is the number of nodes, which we set
+to `detectCores() - 1`. `detectCores` returns the number of available
 nodes. Personally, I usually use all but one available node,
 particularly if running the program on my own computer. This leaves one
 node free for me to use an editor, check email, etc. These things can
@@ -91,7 +90,7 @@ So, did we actually make things faster? Let’s see.
 ```
 
     ##    user  system elapsed 
-    ##    0.17    0.12    6.27
+    ##    0.22    0.15    5.91
 
 ``` r
 {
@@ -131,3 +130,5 @@ clusterEvalQ(cluster, {
 
 })
 ```
+
+###

@@ -107,7 +107,7 @@ p + geom_bar(position="dodge") +
          x="Had an affair?", y="Frequency")
 ```
 
-The feature sold me to `ggplot2` is that makes it very easy to get conditional
+`ggplot2` that makes it very easy to get conditional
 plots. For instance, our theoretical model above posed an interaction between
 years of marriage and whether the man had children. This is, the expected number
 of affairs for a given time ellapsed in marriage is expected to be different

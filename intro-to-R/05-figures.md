@@ -114,14 +114,14 @@ p + geom_bar(position="dodge") +
 
 ![](./assets/unnamed-chunk-6-1.png)
 
-The feature sold me to `ggplot2` is that makes it very easy to get
-conditional plots. For instance, our theoretical model above posed an
-interaction between years of marriage and whether the man had children.
-This is, the expected number of affairs for a given time ellapsed in
-marriage is expected to be different depending on whether the man has
-children or not. Therefore, in the exploration of our data, we would
-like to see the number of affairs by `ym` and by `children`. For
-instance, we could look at:
+`ggplot2` that makes it very easy to get conditional plots. For
+instance, our theoretical model above posed an interaction between years
+of marriage and whether the man had children. This is, the expected
+number of affairs for a given time ellapsed in marriage is expected to
+be different depending on whether the man has children or not.
+Therefore, in the exploration of our data, we would like to see the
+number of affairs by `ym` and by `children`. For instance, we could look
+at:
 
 ``` r
 p <- ggplot(affairs, aes(x=nbaffairs > 0, group=child))

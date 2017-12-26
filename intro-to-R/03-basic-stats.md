@@ -265,13 +265,14 @@ function to ensure that the `-` inside is taken as an arithmetical
 operator and not as a formula operator. Then, multiply that new variable
 by the variable `child` which is a factor, which uses `yes` as the
 reference level in the dummy expansion. Not only that, the `*` operator
-creates the full interaction including the main effects. Finally,
-although `religious` is an numerical variable, we pass it through
-`factor` to cast it into a categorical with *n* − 1 dummies. As we can
-see, the formula takes care of a lot of the transformations and lets us
-express the structure of the model very succintly. We could have passed
-the transformed data directly (look at the `y` and `x` arguments in the
-`lm` documentation), but this approach is considerably easier.
+creates the full interaction including the main effects (use `:` instead
+of `*` to include interactions but not main effects). Finally, although
+`religious` is an numerical variable, we pass it through `factor` to
+cast it into a categorical with *n* − 1 dummies. As we can see, the
+formula takes care of a lot of the transformations and lets us express
+the structure of the model very succintly. We could have passed the
+transformed data directly (look at the `y` and `x` arguments in the `lm`
+documentation), but this approach is considerably easier.
 
 Lets take a look at the object to see the estimated coefficients:
 
@@ -351,7 +352,7 @@ names(summary_model)
 
 This is one of the beauties of R as an statistical language. The object
 `summary_model` now holds all the information about the model. We could
-for instance retrieve the coefficients and the covariace matrix to get
+for instance retrieve the coefficients and the covariance matrix to get
 the normal-based confidence intervals:
 
 ``` r
@@ -410,7 +411,12 @@ class(sample_model)
 
 In this case, `sample_model` does not contain the confidence interval
 (why should it?), but `confint` knows where to look for the information
-it needs in the object. `confint` is therefore a *method*.
+it needs in the object. A *method* is a type of function associated with
+a particular class of objects. `confint` is a generic function: a
+generic function looks at the class of the object that is passed to the
+function and then looks up and calls the appropriate method associated
+with that class. For those with experience in object-oriented
+programming, note how this contrasts with message passing.
 
 [1] The function could be applied to a dataset but I find that amount of
 information overwhelming.
