@@ -54,9 +54,9 @@ necessary when the functional body contains multiple lines.
 A closure can be thought of as a function with data attached. They can
 reduce bookkeeping and improve readability by keeping copies of data
 instead of passing them as parameters to the function each time. They
-are normally used when a function is called multiple times but one or
-more parameters to the function does not change between calls. Closures
-are normally created by other functions. Here as an example.
+are useful when a function is called multiple times but one or more
+parameters to the function does not change between calls. Closures are
+normally created by other functions. Here as an example.
 
 ``` r
 setup_bootstrap <- function(dat) {
@@ -84,18 +84,19 @@ more_samples <- lapply(1:30, function(unused) bootstrap())
 `bootstrap` is a closure that is returned by `setup_bootstrap` (recall
 that functions in R are first-class, so we can return them like any
 other variable). Notice that we don’t need to pass a copy of `fake_data`
-to `bootstrap` when we call it. It has an internal copy of the data set.
+to `bootstrap` when we call it. That is because `bootstrap` already has
+an internal copy of the data set.
 
 R uses something called lexical scoping. This means that if a function
 refers to a variable that is not defined within the function and is not
 passed as a parameter to the function, the next place R looks for the
-variables is where the function is defined (this is in contrast to
-dynamic scoping, which R’s ancestor S uses, which instead looks where
-the funciton is called, not defined). `dat` and `n` are not passed to
-the anonymous (unnamed) function within `setup_bootstrap`, but that
+variable is where the function is defined (this is in contrast to
+dynamic scoping, which R’s ancestor S uses, that instead looks where the
+funciton is called, not defined). `dat` and `n` are not passed to the
+anonymous (i.e., unnamed) function within `setup_bootstrap`, but that
 anonymous function can still see them. When `setup_boostrap` returns,
 `dat` and `n` would normally go out of scope and disappear, but the
-newly created function, `bootstrap` keeps a copy because of lexical
+newly created function, `bootstrap`, keeps a copy because of lexical
 scoping. Note that changing `fake_data` will not update the copy within
 `bootstrap`, since the version within `bootstrap` is from the `dat`
 parameter of `setup_bootstrap`, not the global variable `fake_data`.
@@ -173,14 +174,14 @@ produces an error, so the function never reaches the next conditional.
 One common need is to apply an operation to each individual element of a
 vector or list. As in most programming languages, this can be done in R
 through looping constructs. However, the use of loops in R is considered
-by some to be bad practice, and loopos can significantly slow down the
-execution of one’s code in some cases, particularly when updated a data
+by some to be bad practice, and loops can significantly slow down the
+execution of one’s code in some cases, particularly when updating a data
 frame within a loop. This is not always true, such as when adding
 elements to a allocated list, but even in cases where loops do not
 increase run time, one should be hesitant to use loops since they are
 not consistent with R’s status as a (somewhat) functional vector-based
 language. Another reason to avoid loops is that they can be difficult to
-translate into a parallelized version.
+translate into parallelized code.
 
 What do we do then? The alternative in R is vectorized operations. There
 are a number of ways to do this. First, let’s define a function that
@@ -201,11 +202,12 @@ myfactorial <- function(x) {
 Note that this function calls itself. This is known as recursion. In
 practice, some checks on the parameter should probably be added to
 assure that it’s a nonnegative integer, and there are surely faster,
-safer implementations, but let’s not worry about that for now. Let’s
-instead consider what we would need to do to apply the function to each
-element of a vector. We cannot simply pass in the vector because the
-function expects a scalar, i.e., a vector of length 1. There are a few
-ways around this.
+safer implementations (a production-quality version would likely not use
+recursion), but let’s not worry about that for now. Let’s instead
+consider what we would need to do to apply the function to each element
+of a vector. We cannot simply pass in the vector because the function
+expects a scalar, i.e., a vector of length 1. There are a few ways
+around this.
 
 One option is to use the `apply` family of functions. These are
 functions that can apply a function to individual elements of a vector
@@ -225,9 +227,10 @@ return a list. If you want a predictable return type, one can use
 
 There are other functions in the apply family, such as `apply`, which
 applies a function to every row or column of a matrix, but they are used
-in a similar manner. Further, some R users prefer a group of functions
-defined in the `plyr` and `dplyr` packages which perform apply-like
-operations. These packages are briefly discussed in the next section.
+in a similar manner (see: `mapply`, `tapply`, `vapply`). Further, some R
+users prefer a group of functions defined in the `plyr` and `dplyr`
+packages which perform apply-like operations. These packages are briefly
+discussed in the next section.
 
 A second option is to create a new function which handles all of these
 `apply` operations automatically. This can be done through the
@@ -286,17 +289,20 @@ weird_sum <- Vectorize(function(x, y, z) {
 ```
 
 *Actually, `weird_sum` will work as intended without the use of
-`Vectorize` but only because the `+` operator is vectorized. For the
-sake of illustration, let’s ignore this pesky detail.*
+`Vectorize` but only because the `+` operator is itself vectorized. For
+the sake of illustration, let’s ignore this pesky detail.*
 
 We did not need to specify `vectorize.args` in our `myfactorial` example
 because the default value is to vectorize over all arguments, which is
-what we wanted in that case.
+what we wanted.
 
 In some cases, both options are unnecessary because there are already
-functions to accomplish our task. For example, the built-in `factorial`
-function in R is already vectorized. Similarly, there are a number of
+built-in vectorized functions to accomplish our task. For example, the
+built-in `factorial` function in R is already vectorized, so there is no
+need to use `sapply`, `Vectorize`, etc. Similarly, there are a number of
 built-in functions for calculating sums and means over rows or columns
-of a matrix, e.g., `rowSums`, `colMeans`. The use of these kind of
-functions is simpler and often results in faster programs than the
-above, so one should use explicit vectorization only as needed.
+of a matrix, e.g., `rowSums`, `colMeans`, which should be used in lieu
+of applying `sum` or `mean` to individual rows or columns via `apply`.
+The use of these kind of functions is simpler and often results in
+faster programs than the methods mentioned above, so one should use
+explicit vectorization only as needed.
