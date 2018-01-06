@@ -34,7 +34,6 @@ my_mean
 ```
 
     ## function(x) sum(x)/length(x)
-    ## <environment: 0x000000000a13bf20>
 
 The way we defined the function is perfectly valid but we could also be
 a bit more explicit by enclosing the statement in parenthesis and
@@ -175,14 +174,12 @@ produces an error, so the function never reaches the next conditional.
 One common need is to apply an operation to each individual element of a
 vector or list. As in most programming languages, this can be done in R
 through looping constructs. However, the use of loops in R is considered
-by some to be bad practice, and loops can significantly slow down the
-execution of one’s code in some cases, particularly when updating a data
-frame within a loop. This is not always true, such as when adding
-elements to a allocated list, but even in cases where loops do not
-increase run time, one should be hesitant to use loops since they are
-not consistent with R’s status as a (somewhat) functional vector-based
-language. Another reason to avoid loops is that they can be difficult to
-translate into parallelized code.
+by some to be bad practice. Loops can introduce bugs and can encourage
+practices which may slow the execution of one’s code. Some say they are
+okay in limited situations, but regardless one should be hesitant to use
+loops since they are not consistent with R’s status as a (somewhat)
+functional vector-based language. Another reason to avoid loops is that
+they can be difficult to translate into parallelized code.
 
 What do we do then? The alternative in R is vectorized operations. There
 are a number of ways to do this. First, let’s define a function that
